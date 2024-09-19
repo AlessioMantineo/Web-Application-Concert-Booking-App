@@ -1,0 +1,260 @@
+-- database: ./concerts.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM "table-name";
+
+CREATE TABLE User (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    salt TEXT NOT NULL,
+    password TEXT NOT NULL,
+    role integer not null references Role(id)
+)
+
+CREATE TABLE Theatre (
+    theatre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    columns INTEGER NOT NULL,
+    rows INTEGER NOT NULL,
+    size INTEGER NOT NULL -- Toatl Number of seats in the theatre
+);
+
+
+CREATE TABLE Concert (
+    concert_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    date TEXT NOT NULL, -- 
+    theatre_id INTEGER NOT NULL,
+    FOREIGN KEY (theatre_id) REFERENCES Theatre(theatre_id)
+);
+
+CREATE TABLE Seat (
+    seat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    row INTEGER NOT NULL,
+    position TEXT NOT NULL,
+    concert_id INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    FOREIGN KEY (concert_id) REFERENCES Concert(concert_id)
+);
+
+CREATE TABLE Ticket (
+    ticket_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    concert_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (concert_id) REFERENCES Concert(concert_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+);
+
+CREATE TABLE TicketSeat (
+    ticket_seat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticket_id INTEGER NOT NULL,
+    seat_id INTEGER NOT NULL,
+    FOREIGN KEY (ticket_id) REFERENCES Ticket(ticket_id),
+    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id)
+);
+
+
+INSERT INTO User (username, salt, password, role) VALUES
+('supermario', '045ghlrj4Hwertgl', '5bd4dc151a8d58d625b552ed67cf8a7717ae692aa5d569aea4262468d521cfba1cda21d4e2fab3a72949a3ae759b0d47326bb11cd4cf96eb9eff975079675487', 1),  -- loyal
+('luigi', 'lkfjgo4jhd9eoeoe', 'fdc9aa655bbf88393d018129ff7a1384b7b8cce854a8cee393a40ad2355d846da5bfe51eac46e967734446b4dcafd9c742adc2d8ec4f8a16268e63d383ef8b38', 1),  -- loyal
+('wario', 'uewofjhhjfigwhij', '312a57a604fcc790c4b2f9547b13a5404916e6fb984f79c3402613b240dcd8968f7ca0b50a0e506926999b89311b600412af7768f043fb8cb99e2ac21a930aba', 0),  -- normal
+('toad', 'jikrtjtriktioeet', 'a3e537dbaa860a0ea5eaf92b890aec871bd01a5dd6076787468c4c4106271b4c409705fb072fa638973c624e553017f58c0f88e09c8c6b85eaec1a1e344b5ca4', 0);  -- normal
+
+INSERT INTO Theatre (name, columns, rows, size) VALUES 
+('Small Theatre', 8, 4, 32),  -- Small Theatre: 4 rows * 8 columns = 32 seats
+('Medium Theatre', 10, 6, 60), -- Medium Theatre: 6 rows * 10 columns = 60 seats
+('Large Theatre', 14, 9, 126); -- Large Theatre: 9 rows * 14 columns = 126 seats
+
+INSERT INTO Concert (title, date, theatre_id) VALUES 
+('JS Concert the sound of coding', '2024-10-15', 1),  -- Small Theatre
+('SuperMario Bros Songs', '2024-10-28', 1),  -- Small Theatre
+('30 Cum Laude sensation', '2024-11-05', 2),  -- Medium Theatre
+('No Music Just silence', '2024-11-18', 2),  -- Medium Theatre
+('Noise of classroom chairs', '2024-12-03', 3),  -- Large Theatre
+('Warning and error noise', '2024-12-15', 3);  -- Large Theatre
+
+-- Seats for Concerts in Small Theatre (Concerts 1 and 2)
+-- Small Theatre (4 rows, 8 columns)
+INSERT INTO Seat (row, position, concert_id, status) VALUES 
+-- Concert 1: "JS Concert the sound of coding"
+(1, 'A', 1, 'available'), (1, 'B', 1, 'available'), (1, 'C', 1, 'available'), (1, 'D', 1, 'available'),
+(1, 'E', 1, 'available'), (1, 'F', 1, 'available'), (1, 'G', 1, 'available'), (1, 'H', 1, 'available'),
+(2, 'A', 1, 'available'), (2, 'B', 1, 'available'), (2, 'C', 1, 'available'), (2, 'D', 1, 'available'),
+(2, 'E', 1, 'available'), (2, 'F', 1, 'available'), (2, 'G', 1, 'available'), (2, 'H', 1, 'available'),
+(3, 'A', 1, 'available'), (3, 'B', 1, 'available'), (3, 'C', 1, 'available'), (3, 'D', 1, 'available'),
+(3, 'E', 1, 'available'), (3, 'F', 1, 'available'), (3, 'G', 1, 'available'), (3, 'H', 1, 'available'),
+(4, 'A', 1, 'available'), (4, 'B', 1, 'available'), (4, 'C', 1, 'available'), (4, 'D', 1, 'available'),
+(4, 'E', 1, 'available'), (4, 'F', 1, 'available'), (4, 'G', 1, 'available'), (4, 'H', 1, 'available'),
+
+-- Concert 2: "SuperMario Bros Songs"
+(1, 'A', 2, 'available'), (1, 'B', 2, 'available'), (1, 'C', 2, 'available'), (1, 'D', 2, 'available'),
+(1, 'E', 2, 'available'), (1, 'F', 2, 'available'), (1, 'G', 2, 'available'), (1, 'H', 2, 'available'),
+(2, 'A', 2, 'available'), (2, 'B', 2, 'available'), (2, 'C', 2, 'available'), (2, 'D', 2, 'available'),
+(2, 'E', 2, 'available'), (2, 'F', 2, 'available'), (2, 'G', 2, 'available'), (2, 'H', 2, 'available'),
+(3, 'A', 2, 'available'), (3, 'B', 2, 'available'), (3, 'C', 2, 'available'), (3, 'D', 2, 'available'),
+(3, 'E', 2, 'available'), (3, 'F', 2, 'available'), (3, 'G', 2, 'available'), (3, 'H', 2, 'available'),
+(4, 'A', 2, 'available'), (4, 'B', 2, 'available'), (4, 'C', 2, 'available'), (4, 'D', 2, 'available'),
+(4, 'E', 2, 'available'), (4, 'F', 2, 'available'), (4, 'G', 2, 'available'), (4, 'H', 2, 'available');
+
+
+-- Seats for Concerts in Medium Theatre (Concerts 3 and 4)
+-- Medium Theatre (6 rows, 10 columns)
+INSERT INTO Seat (row, position, concert_id, status) VALUES 
+-- Concert 3: "30 Cum Laude sensation"
+(1, 'A', 3, 'available'), (1, 'B', 3, 'available'), (1, 'C', 3, 'available'), (1, 'D', 3, 'available'),
+(1, 'E', 3, 'available'), (1, 'F', 3, 'available'), (1, 'G', 3, 'available'), (1, 'H', 3, 'available'),
+(1, 'I', 3, 'available'), (1, 'J', 3, 'available'),
+(2, 'A', 3, 'available'), (2, 'B', 3, 'available'), (2, 'C', 3, 'available'), (2, 'D', 3, 'available'),
+(2, 'E', 3, 'available'), (2, 'F', 3, 'available'), (2, 'G', 3, 'available'), (2, 'H', 3, 'available'),
+(2, 'I', 3, 'available'), (2, 'J', 3, 'available'),
+(3, 'A', 3, 'available'), (3, 'B', 3, 'available'), (3, 'C', 3, 'available'), (3, 'D', 3, 'available'),
+(3, 'E', 3, 'available'), (3, 'F', 3, 'available'), (3, 'G', 3, 'available'), (3, 'H', 3, 'available'),
+(3, 'I', 3, 'available'), (3, 'J', 3, 'available'),
+(4, 'A', 3, 'available'), (4, 'B', 3, 'available'), (4, 'C', 3, 'available'), (4, 'D', 3, 'available'),
+(4, 'E', 3, 'available'), (4, 'F', 3, 'available'), (4, 'G', 3, 'available'), (4, 'H', 3, 'available'),
+(4, 'I', 3, 'available'), (4, 'J', 3, 'available'),
+(5, 'A', 3, 'available'), (5, 'B', 3, 'available'), (5, 'C', 3, 'available'), (5, 'D', 3, 'available'),
+(5, 'E', 3, 'available'), (5, 'F', 3, 'available'), (5, 'G', 3, 'available'), (5, 'H', 3, 'available'),
+(5, 'I', 3, 'available'), (5, 'J', 3, 'available'),
+(6, 'A', 3, 'available'), (6, 'B', 3, 'available'), (6, 'C', 3, 'available'), (6, 'D', 3, 'available'),
+(6, 'E', 3, 'available'), (6, 'F', 3, 'available'), (6, 'G', 3, 'available'), (6, 'H', 3, 'available'),
+(6, 'I', 3, 'available'), (6, 'J', 3, 'available'),
+
+-- Concert 4: "No Music Just silence"
+(1, 'A', 4, 'available'), (1, 'B', 4, 'available'), (1, 'C', 4, 'available'), (1, 'D', 4, 'available'),
+(1, 'E', 4, 'available'), (1, 'F', 4, 'available'), (1, 'G', 4, 'available'), (1, 'H', 4, 'available'),
+(1, 'I', 4, 'available'), (1, 'J', 4, 'available'),
+(2, 'A', 4, 'available'), (2, 'B', 4, 'available'), (2, 'C', 4, 'available'), (2, 'D', 4, 'available'),
+(2, 'E', 4, 'available'), (2, 'F', 4, 'available'), (2, 'G', 4, 'available'), (2, 'H', 4, 'available'),
+(2, 'I', 4, 'available'), (2, 'J', 4, 'available'),
+(3, 'A', 4, 'available'), (3, 'B', 4, 'available'), (3, 'C', 4, 'available'), (3, 'D', 4, 'available'),
+(3, 'E', 4, 'available'), (3, 'F', 4, 'available'), (3, 'G', 4, 'available'), (3, 'H', 4, 'available'),
+(3, 'I', 4, 'available'), (3, 'J', 4, 'available'),
+(4, 'A', 4, 'available'), (4, 'B', 4, 'available'), (4, 'C', 4, 'available'), (4, 'D', 4, 'available'),
+(4, 'E', 4, 'available'), (4, 'F', 4, 'available'), (4, 'G', 4, 'available'), (4, 'H', 4, 'available'),
+(4, 'I', 4, 'available'), (4, 'J', 4, 'available'),
+(5, 'A', 4, 'available'), (5, 'B', 4, 'available'), (5, 'C', 4, 'available'), (5, 'D', 4, 'available'),
+(5, 'E', 4, 'available'), (5, 'F', 4, 'available'), (5, 'G', 4, 'available'), (5, 'H', 4, 'available'),
+(5, 'I', 4, 'available'), (5, 'J', 4, 'available'),
+(6, 'A', 4, 'available'), (6, 'B', 4, 'available'), (6, 'C', 4, 'available'), (6, 'D', 4, 'available'),
+(6, 'E', 4, 'available'), (6, 'F', 4, 'available'), (6, 'G', 4, 'available'), (6, 'H', 4, 'available'),
+(6, 'I', 4, 'available'), (6, 'J', 4, 'available');
+
+-- Seats for Concerts in Large Theatre (Concerts 5 and 6)
+-- Large Theatre (9 rows, 14 columns)
+INSERT INTO Seat (row, position, concert_id, status) VALUES 
+-- Concert 5: "Noise of classroom chairs"
+(1, 'A', 5, 'available'), (1, 'B', 5, 'available'), (1, 'C', 5, 'available'), (1, 'D', 5, 'available'),
+(1, 'E', 5, 'available'), (1, 'F', 5, 'available'), (1, 'G', 5, 'available'), (1, 'H', 5, 'available'),
+(1, 'I', 5, 'available'), (1, 'J', 5, 'available'), (1, 'K', 5, 'available'), (1, 'L', 5, 'available'),
+(1, 'M', 5, 'available'), (1, 'N', 5, 'available'),
+(2, 'A', 5, 'available'), (2, 'B', 5, 'available'), (2, 'C', 5, 'available'), (2, 'D', 5, 'available'),
+(2, 'E', 5, 'available'), (2, 'F', 5, 'available'), (2, 'G', 5, 'available'), (2, 'H', 5, 'available'),
+(2, 'I', 5, 'available'), (2, 'J', 5, 'available'), (2, 'K', 5, 'available'), (2, 'L', 5, 'available'),
+(2, 'M', 5, 'available'), (2, 'N', 5, 'available'),
+(3, 'A', 5, 'available'), (3, 'B', 5, 'available'), (3, 'C', 5, 'available'), (3, 'D', 5, 'available'),
+(3, 'E', 5, 'available'), (3, 'F', 5, 'available'), (3, 'G', 5, 'available'), (3, 'H', 5, 'available'),
+(3, 'I', 5, 'available'), (3, 'J', 5, 'available'), (3, 'K', 5, 'available'), (3, 'L', 5, 'available'),
+(3, 'M', 5, 'available'), (3, 'N', 5, 'available'),
+(4, 'A', 5, 'available'), (4, 'B', 5, 'available'), (4, 'C', 5, 'available'), (4, 'D', 5, 'available'),
+(4, 'E', 5, 'available'), (4, 'F', 5, 'available'), (4, 'G', 5, 'available'), (4, 'H', 5, 'available'),
+(4, 'I', 5, 'available'), (4, 'J', 5, 'available'), (4, 'K', 5, 'available'), (4, 'L', 5, 'available'),
+(4, 'M', 5, 'available'), (4, 'N', 5, 'available'),
+(5, 'A', 5, 'available'), (5, 'B', 5, 'available'), (5, 'C', 5, 'available'), (5, 'D', 5, 'available'),
+(5, 'E', 5, 'available'), (5, 'F', 5, 'available'), (5, 'G', 5, 'available'), (5, 'H', 5, 'available'),
+(5, 'I', 5, 'available'), (5, 'J', 5, 'available'), (5, 'K', 5, 'available'), (5, 'L', 5, 'available'),
+(5, 'M', 5, 'available'), (5, 'N', 5, 'available'),
+(6, 'A', 5, 'available'), (6, 'B', 5, 'available'), (6, 'C', 5, 'available'), (6, 'D', 5, 'available'),
+(6, 'E', 5, 'available'), (6, 'F', 5, 'available'), (6, 'G', 5, 'available'), (6, 'H', 5, 'available'),
+(6, 'I', 5, 'available'), (6, 'J', 5, 'available'), (6, 'K', 5, 'available'), (6, 'L', 5, 'available'),
+(6, 'M', 5, 'available'), (6, 'N', 5, 'available'),
+(7, 'A', 5, 'available'), (7, 'B', 5, 'available'), (7, 'C', 5, 'available'), (7, 'D', 5, 'available'),
+(7, 'E', 5, 'available'), (7, 'F', 5, 'available'), (7, 'G', 5, 'available'), (7, 'H', 5, 'available'),
+(7, 'I', 5, 'available'), (7, 'J', 5, 'available'), (7, 'K', 5, 'available'), (7, 'L', 5, 'available'),
+(7, 'M', 5, 'available'), (7, 'N', 5, 'available'),
+(8, 'A', 5, 'available'), (8, 'B', 5, 'available'), (8, 'C', 5, 'available'), (8, 'D', 5, 'available'),
+(8, 'E', 5, 'available'), (8, 'F', 5, 'available'), (8, 'G', 5, 'available'), (8, 'H', 5, 'available'),
+(8, 'I', 5, 'available'), (8, 'J', 5, 'available'), (8, 'K', 5, 'available'), (8, 'L', 5, 'available'),
+(8, 'M', 5, 'available'), (8, 'N', 5, 'available'),
+(9, 'A', 5, 'available'), (9, 'B', 5, 'available'), (9, 'C', 5, 'available'), (9, 'D', 5, 'available'),
+(9, 'E', 5, 'available'), (9, 'F', 5, 'available'), (9, 'G', 5, 'available'), (9, 'H', 5, 'available'),
+(9, 'I', 5, 'available'), (9, 'J', 5, 'available'), (9, 'K', 5, 'available'), (9, 'L', 5, 'available'),
+(9, 'M', 5, 'available'), (9, 'N', 5, 'available'),
+
+-- Concert 6: "Warning and error noise"
+(1, 'A', 6, 'available'), (1, 'B', 6, 'available'), (1, 'C', 6, 'available'), (1, 'D', 6, 'available'),
+(1, 'E', 6, 'available'), (1, 'F', 6, 'available'), (1, 'G', 6, 'available'), (1, 'H', 6, 'available'),
+(1, 'I', 6, 'available'), (1, 'J', 6, 'available'), (1, 'K', 6, 'available'), (1, 'L', 6, 'available'),
+(1, 'M', 6, 'available'), (1, 'N', 6, 'available'),
+(2, 'A', 6, 'available'), (2, 'B', 6, 'available'), (2, 'C', 6, 'available'), (2, 'D', 6, 'available'),
+(2, 'E', 6, 'available'), (2, 'F', 6, 'available'), (2, 'G', 6, 'available'), (2, 'H', 6, 'available'),
+(2, 'I', 6, 'available'), (2, 'J', 6, 'available'), (2, 'K', 6, 'available'), (2, 'L', 6, 'available'),
+(2, 'M', 6, 'available'), (2, 'N', 6, 'available'),
+(3, 'A', 6, 'available'), (3, 'B', 6, 'available'), (3, 'C', 6, 'available'), (3, 'D', 6, 'available'),
+(3, 'E', 6, 'available'), (3, 'F', 6, 'available'), (3, 'G', 6, 'available'), (3, 'H', 6, 'available'),
+(3, 'I', 6, 'available'), (3, 'J', 6, 'available'), (3, 'K', 6, 'available'), (3, 'L', 6, 'available'),
+(3, 'M', 6, 'available'), (3, 'N', 6, 'available'),
+(4, 'A', 6, 'available'), (4, 'B', 6, 'available'), (4, 'C', 6, 'available'), (4, 'D', 6, 'available'),
+(4, 'E', 6, 'available'), (4, 'F', 6, 'available'), (4, 'G', 6, 'available'), (4, 'H', 6, 'available'),
+(4, 'I', 6, 'available'), (4, 'J', 6, 'available'), (4, 'K', 6, 'available'), (4, 'L', 6, 'available'),
+(4, 'M', 6, 'available'), (4, 'N', 6, 'available'),
+(5, 'A', 6, 'available'), (5, 'B', 6, 'available'), (5, 'C', 6, 'available'), (5, 'D', 6, 'available'),
+(5, 'E', 6, 'available'), (5, 'F', 6, 'available'), (5, 'G', 6, 'available'), (5, 'H', 6, 'available'),
+(5, 'I', 6, 'available'), (5, 'J', 6, 'available'), (5, 'K', 6, 'available'), (5, 'L', 6, 'available'),
+(5, 'M', 6, 'available'), (5, 'N', 6, 'available'),
+(6, 'A', 6, 'available'), (6, 'B', 6, 'available'), (6, 'C', 6, 'available'), (6, 'D', 6, 'available'),
+(6, 'E', 6, 'available'), (6, 'F', 6, 'available'), (6, 'G', 6, 'available'), (6, 'H', 6, 'available'),
+(6, 'I', 6, 'available'), (6, 'J', 6, 'available'), (6, 'K', 6, 'available'), (6, 'L', 6, 'available'),
+(6, 'M', 6, 'available'), (6, 'N', 6, 'available'),
+(7, 'A', 6, 'available'), (7, 'B', 6, 'available'), (7, 'C', 6, 'available'), (7, 'D', 6, 'available'),
+(7, 'E', 6, 'available'), (7, 'F', 6, 'available'), (7, 'G', 6, 'available'), (7, 'H', 6, 'available'),
+(7, 'I', 6, 'available'), (7, 'J', 6, 'available'), (7, 'K', 6, 'available'), (7, 'L', 6, 'available'),
+(7, 'M', 6, 'available'), (7, 'N', 6, 'available'),
+(8, 'A', 6, 'available'), (8, 'B', 6, 'available'), (8, 'C', 6, 'available'), (8, 'D', 6, 'available'),
+(8, 'E', 6, 'available'), (8, 'F', 6, 'available'), (8, 'G', 6, 'available'), (8, 'H', 6, 'available'),
+(8, 'I', 6, 'available'), (8, 'J', 6, 'available'), (8, 'K', 6, 'available'), (8, 'L', 6, 'available'),
+(8, 'M', 6, 'available'), (8, 'N', 6, 'available'),
+(9, 'A', 6, 'available'), (9, 'B', 6, 'available'), (9, 'C', 6, 'available'), (9, 'D', 6, 'available'),
+(9, 'E', 6, 'available'), (9, 'F', 6, 'available'), (9, 'G', 6, 'available'), (9, 'H', 6, 'available'),
+(9, 'I', 6, 'available'), (9, 'J', 6, 'available'), (9, 'K', 6, 'available'), (9, 'L', 6, 'available'),
+(9, 'M', 6, 'available'), (9, 'N', 6, 'available');
+
+
+-- Tickets for User 1 (loyal) for Concerts 1 and 3
+INSERT INTO Ticket (concert_id, user_id) VALUES 
+(1, 1),  -- Reservation 1: User 1 for Concert 1 (Small Theatre)
+(3, 1);  -- Reservation 2: User 1 for Concert 3 (Medium Theatre)
+
+-- Tickets for User 3 (normal) for Concerts 2 and 4
+INSERT INTO Ticket (concert_id, user_id) VALUES 
+(2, 3),  -- Reservation 3: User 3 for Concert 2 (Small Theatre)
+(4, 3);  -- Reservation 4: User 3 for Concert 4 (Medium Theatre)
+
+-- Seats for User 1 (loyal) in Concert 1 (Small Theatre)
+INSERT INTO TicketSeat (ticket_id, seat_id) VALUES 
+(1, 1),  -- Seat 1A
+(1, 2);  -- Seat 1B
+
+-- Seats for User 1 (loyal) in Concert 3 (Medium Theatre)
+INSERT INTO TicketSeat (ticket_id, seat_id) VALUES 
+(2, 41),  -- Seat 4A
+(2, 42);  -- Seat 4B
+
+-- Seats for User 3 (normal) in Concert 2 (Small Theatre)
+INSERT INTO TicketSeat (ticket_id, seat_id) VALUES 
+(3, 9),  -- Seat 2A
+(3, 10); -- Seat 2B
+
+-- Seats for User 3 (normal) in Concert 4 (Medium Theatre)
+INSERT INTO TicketSeat (ticket_id, seat_id) VALUES 
+(4, 51),  -- Seat 5A
+(4, 52);  -- Seat 5B
+
+-- Update seat statuses for User 1 (loyal)
+UPDATE Seat SET status = 'occupied' WHERE seat_id IN (1, 2);  -- Concert 1
+UPDATE Seat SET status = 'occupied' WHERE seat_id IN (41, 42);  -- Concert 3
+
+-- Update seat statuses for User 3 (normal)
+UPDATE Seat SET status = 'occupied' WHERE seat_id IN (9, 10);  -- Concert 2
+UPDATE Seat SET status = 'occupied' WHERE seat_id IN (51, 52);  -- Concert 4
