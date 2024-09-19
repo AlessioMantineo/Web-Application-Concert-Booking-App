@@ -1,0 +1,169 @@
+.custom-table {
+  border-radius: 8px; /* Rounds the corners of the table */
+  overflow: hidden; /* Ensures rounded borders apply to rows as well */
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.303); /* Adds a shadow around the table */
+  width: 100%;
+  margin-bottom: 1.5rem; /* Adds space below the table */
+}
+
+
+.custom-row {
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adds transition effect for hover */
+}
+
+.custom-row:hover {
+  transform: translateY(-2px); /* Slightly lifts the row on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Adds a more pronounced shadow on hover */
+}
+
+.custom-row td {
+  border-top: none; /* Removes the top border between rows */
+}
+
+
+
+.navbar-padding {
+  padding: 10px 20px; /* Adds padding to the navbar */
+}
+
+.welcome-text {
+  font-size: 1.5rem; /* Sets the font size for the welcome text */
+  font-weight: bold; /* Makes the welcome text bold */
+  color: #2fd9f0; /* Sets the color of the welcome text */
+  margin-left: auto;
+  margin-right: auto; /* Centers the welcome text */
+}
+
+.custom-text {
+  font-size: 1rem; /* Sets the font size for the custom text */
+  font-weight: bold; /* Makes the custom text bold */
+  color: #000000; /* Sets the color of the custom text */
+  margin-left: auto;
+  margin-right: auto; /* Centers the custom text */
+}
+
+
+
+
+.navbar .bi-music-note-beamed {
+  font-size: 1.5rem; /* Sets the font size for the music note icon */
+  color: #00ddfa; /* Sets the color of the music note icon */
+}
+
+
+
+body {
+  background-color: #e0f4f1; /* Sets the background color for the body */
+}
+
+h2 {
+  color: #333; /* Sets the color for h2 headings */
+}
+
+
+button {
+  border-radius: 0.5rem; /* Rounds the corners of buttons */
+}
+
+.alert {
+  border-radius: 0.5rem; /* Rounds the corners of alerts */
+}
+
+
+.custom-ticket-table thead th {
+  background-color: #29992c; /* Sets the background color for the table header */
+  color: white; /* Sets the text color to white */
+  font-weight: bold; /* Makes the header text bold */
+  text-align: center; /* Centers the text in the header */
+  border-bottom: 2px solid #5b36ff; /* Adds a darker border at the bottom of the header */
+}
+
+/* Styles for the entire table */
+.custom-ticket-table {
+  border-radius: 10px; /* Rounds the corners of the table */
+  background-color: #e0f7fa; /* Sets the background color for the table */
+  padding: 15px; /* Adds padding to the table */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Adds a shadow around the table */
+  border: 2px solid #00acc1; /* Adds a border around the table */
+}
+
+
+/* Styles for table cells */
+.custom-ticket-table td, .custom-ticket-table th {
+  border-top: none; /* Removes the top border in table cells */
+  padding: 10px; /* Adds padding to table cells */
+  text-align: center; /* Centers the text in table cells */
+  background-color: #e9faa0; /* Sets the background color for table cells */
+}
+/* Action button in the table */
+.custom-ticket-table .btn-info {
+  background-color: #ee61bf; /* Sets the background color for the info button */
+  border-color: #006064; /* Sets the border color for the info button */
+}
+
+.custom-ticket-table .btn-info:hover {
+  background-color: #004d40; /* Changes the background color on hover */
+  border-color: #004d40; /* Changes the border color on hover */
+}
+
+.concert-title {
+  background-color: #46c8da; /* Sets the background color to light blue */
+  padding: 0.2em 0.6em; /* Adds padding to create space around the text */
+  border-radius: 0.5em; /* Rounds the corners for a softer effect */
+  display: inline-block;
+  margin-bottom: 1em; /* Adds space below the title */
+}
+
+.discount-text {
+  background-color: #dfec6a; /* Sets the background color to a light blue */
+  padding: 0.2em 0.6em; /* Adds padding to create space around the text */
+  border-radius: 0.5em; /* Rounds the corners for a softer effect */
+  display: inline-block;
+  margin-bottom: 1em; /* Adds space below the text */
+}
+
+.seat-map {
+  margin-top: 20px; /* Adds space above the seat map */
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Adds space below each row of seats */
+}
+
+.row-label {
+  font-weight: bold; /* Makes the row label bold */
+  margin-right: 10px; /* Adds space to the right of the row label */
+}
+
+.seat-container {
+  background-color: #e2c3cc; /* Light brown background color */
+  padding: 20px; /* Adds padding for better visibility */
+  border-radius: 10px; /* Rounds the corners of the container */
+}
+
+.stage-semicircle {
+  width: 200px;
+  height: 100px;
+  background-color: #8B0000; /* Background color for the semicircle (dark red) */
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px; /* Rounds the top corners to create a semicircle */
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the text inside the stage */
+}
+
+.stage-text {
+  color: white; /* Sets the text color to white */
+  font-size: 1.6rem; /* Sets the font size */
+  font-weight: bold; /* Makes the text bold */
+}
+
+.position-text {
+  padding: 0.2rem 0.4rem; /* Adds padding around the text */
+  font-size: 1.3rem; /* Sets the font size */
+  font-weight: bold; /* Makes the text bold */
+  color: #3c5872; /* Sets the text color */
+}
