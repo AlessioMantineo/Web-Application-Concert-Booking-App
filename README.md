@@ -1,5 +1,4 @@
 # Web-Application-Concert-Booking-App
-polito-Web Application -2024-exams-concert-seats (booking app)
 # Exam #3: "Concert Seats"
 ## Student: s324267 MANTINEO ALESSIO 
 
